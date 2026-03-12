@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Calidad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .recording {
+            animation: pulse-red 1.5s infinite;
+            color: #ef4444;
+            /* Tailwind red-500 */
+        }
+
+        @keyframes pulse-red {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4 font-sans">
+
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-xl p-6 sm:p-8 border border-gray-100">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8 tracking-tight">Control de Calidad</h1>
+
+        <form id="qaForm" class="space-y-5">
+
+            <!-- Lote -->
+            <div>
+                <label for="lote" class="block text-sm font-semibold text-gray-700 mb-1.5">Lote</label>
+                <input type="text" id="lote" name="lote" required placeholder="Ej. Lote-123"
+                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white outline-none transition-all">
+            </div>
+
+            <!-- Tipo de Tela -->
+            <div>
+                <label for="tipoTela" class="block text-sm font-semibold text-gray-700 mb-1.5">Tipo de Tela</label>
+                <select id="tipoTela" name="tipoTela" required
+                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white outline-none transition-all text-gray-800 cursor-pointer">
+                    <option value="" disabled selected>Seleccione un tipo</option>
+                    <option value="Algodón">Algodón</option>
+                    <option value="Poliéster">Poliéster</option>
+                    <option value="Lino">Lino</option>
+                    <option value="Seda">Seda</option>
+                    <option value="Nylon">Nylon</option>
+                </select>
+            </div>
+
+            <!-- Defecto (con micrófono para dictado de voz) -->
+            <div>
+                <label for="defecto" class="block text-sm font-semibold text-gray-700 mb-1.5">Defecto</label>
+                <div class="relative flex items-center">
+                    <input type="text" id="defecto" name="defecto" required placeholder="Describa el defecto..."
+                        class="w-full pl-4 pr-12 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white outline-none transition-all">
+
+                    <button type="button" id="btnMic"
+                        class="absolute right-2 p-1.5 text-gray-400 hover:text-gray-600 bg-transparent rounded-full focus:outline-none transition-colors"
+                        title="Dictar por voz">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+                            stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Severidad -->
+            <div>
+                <label for="severidad" class="block text-sm font-semibold text-gray-700 mb-1.5">Severidad</label>
+                <select id="severidad" name="severidad" required
+                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white outline-none transition-all text-gray-800 cursor-pointer">
+                    <option value="" disabled selected>Seleccione la severidad</option>
+                    <option value="Leve">Leve</option>
+                    <option value="Moderado">Moderado</option>
+                    <option value="Crítico">Crítico</option>
+                </select>
+            </div>
+
+            <!-- Usuario -->
+            <div>
+                <label for="usuario" class="block text-sm font-semibold text-gray-700 mb-1.5">Usuario</label>
+                <input type="text" id="usuario" name="usuario" required placeholder="Nombre o ID del usuario"
+                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white outline-none transition-all">
+            </div>
+
+            <!-- Botón de Envío y Mensaje de Estado -->
+            <div class="pt-4">
+                <button type="submit" id="btnSubmit"
+                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow-sm hover:shadow-md transition-all flex justify-center items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                    </svg>
+                    Guardar Registro
+                </button>
+                <!-- Mensaje de estado al enviar -->
+                <p id="statusMsg" class="text-sm text-center mt-3 hidden font-medium transition-opacity"></p>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Scripts para lógica de Web Speech API y Fetch -->
+    <script>
+        // VARIABLE CONSTANTE DEL GOOGLE APPS SCRIPT
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyTgKQUcy_ATN38EyF9y_6qdkzs7sE0E_LQgurmGQnGH_t5M39kjtDVmoeRA3sDARxCHQ/exec';
+
+        // Referencias a elementos del DOM
+        const form = document.getElementById('qaForm');
+        const defectoInput = document.getElementById('defecto');
+        const btnMic = document.getElementById('btnMic');
+        const btnSubmit = document.getElementById('btnSubmit');
+        const statusMsg = document.getElementById('statusMsg');
+
+        // Configuración de la Web Speech API
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition = null;
+
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = false; // Detener después de una frase
+            recognition.interimResults = false; // Solo resultados finales
+            recognition.lang = 'es-ES'; // Idioma español
+
+            recognition.onstart = function () {
+                // Cambios visuales al iniciar
+                btnMic.classList.add('recording');
+                btnMic.classList.remove('text-gray-400', 'hover:text-gray-600');
+                defectoInput.placeholder = "Escuchando...";
+            };
+
+            recognition.onresult = function (event) {
+                const transcript = event.results[0][0].transcript;
+                const currentText = defectoInput.value.trim();
+
+                // Si ya hay texto, lo concatenamos con un espacio
+                defectoInput.value = currentText ? `${currentText} ${transcript}` : transcript;
+            };
+
+            recognition.onerror = function (event) {
+                console.error("Error en el micrófono:", event.error);
+                stopRecording();
+                if (event.error !== 'no-speech') {
+                    alert("Error con el micrófono: " + event.error);
+                }
+            };
+
+            recognition.onend = function () {
+                stopRecording();
+            };
+        } else {
+            console.warn("Tu navegador no soporta Web Speech API.");
+            btnMic.style.display = 'none'; // Ocultar si no hay soporte
+        }
+
+        function stopRecording() {
+            btnMic.classList.remove('recording');
+            btnMic.classList.add('text-gray-400', 'hover:text-gray-600');
+            defectoInput.placeholder = "Describa el defecto...";
+        }
+
+        // Evento para activar / desactivar dictado
+        btnMic.addEventListener('click', () => {
+            if (!recognition) return;
+
+            // Toggle grabación
+            if (btnMic.classList.contains('recording')) {
+                recognition.stop();
+            } else {
+                try {
+                    recognition.start();
+                } catch (e) {
+                    console.error("No se pudo iniciar el reconocimiento:", e);
+                }
+            }
+        });
+
+        // Evento de envío del formulario
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Interfaz: Deshabilitar botón y mostrar "Guardando..."
+            btnSubmit.disabled = true;
+            btnSubmit.classList.add('opacity-75', 'cursor-not-allowed');
+            btnSubmit.innerHTML = `
+                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg> Guardando...`;
+
+            statusMsg.textContent = 'Guardando...';
+            statusMsg.classList.remove('hidden', 'text-green-600', 'text-red-600');
+            statusMsg.classList.add('block', 'text-indigo-600');
+
+            // Recopilar datos
+            const payload = {
+                lote: document.getElementById('lote').value,
+                tipoTela: document.getElementById('tipoTela').value,
+                defecto: document.getElementById('defecto').value,
+                severidad: document.getElementById('severidad').value,
+                usuario: document.getElementById('usuario').value,
+            };
+
+            try {
+                // Fetch al backend de Apps Script
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Fundamental para evitar bloques de CORS al enviar desde orígenes distintos
+                    headers: {
+                        'Content-Type': 'text/plain;charset=utf-8',
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                // Al usar 'no-cors' la respuesta es opaca, por lo que asumimos que si no lanzó error falló la red, está ok.
+                statusMsg.textContent = 'Guardado exitosamente.';
+                statusMsg.classList.replace('text-indigo-600', 'text-green-600');
+
+                // Limpiar formulario y reiniciar texto del botón
+                form.reset();
+
+            } catch (error) {
+                console.error("Fallo la petición:", error);
+                statusMsg.textContent = 'Hubo un error al guardar. Revisa tu conexión.';
+                statusMsg.classList.replace('text-indigo-600', 'text-red-600');
+            } finally {
+                // Restaurar botón después de 1 segundo (para que de tiempo de ver el exito)
+                setTimeout(() => {
+                    btnSubmit.disabled = false;
+                    btnSubmit.classList.remove('opacity-75', 'cursor-not-allowed');
+                    btnSubmit.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                        </svg> Guardar Registro`;
+                }, 500);
+
+                // Ocultar mensaje de estado a los 4 segundos
+                setTimeout(() => {
+                    statusMsg.classList.add('hidden');
+                    statusMsg.classList.remove('block');
+                }, 4000);
+            }
+        });
+    </script>
+</body>
+
+</html>
