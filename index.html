@@ -5,258 +5,258 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control de Calidad</title>
+    <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Animación para el estado de "Escuchando" del micrófono */
         .recording {
             animation: pulse-red 1.5s infinite;
             color: #ef4444;
-            /* Tailwind red-500 */
+            /* text-red-500 */
         }
 
         @keyframes pulse-red {
             0% {
                 transform: scale(1);
-                opacity: 1;
             }
 
             50% {
-                transform: scale(1.1);
-                opacity: 0.7;
+                transform: scale(1.15);
             }
 
             100% {
                 transform: scale(1);
-                opacity: 1;
             }
         }
     </style>
 </head>
 
-<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4 font-sans">
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4 font-sans text-gray-800">
 
-    <div class="bg-white w-full max-w-lg rounded-2xl shadow-xl p-6 sm:p-8 border border-gray-100">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8 tracking-tight">Control de Calidad</h1>
+    <div class="bg-white w-full max-w-md rounded-2xl shadow-lg border border-gray-100 p-6 sm:p-8">
+        <h1 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">Control de Calidad</h1>
 
-        <form id="qaForm" class="space-y-5">
-
-            <!-- Lote -->
+        <form id="qa-form" class="space-y-5">
+            <!-- Campo: Lote -->
             <div>
-                <label for="lote" class="block text-sm font-semibold text-gray-700 mb-1.5">Lote</label>
-                <input type="text" id="lote" name="lote" required placeholder="Ej. Lote-123"
-                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white outline-none transition-all">
+                <label for="lote" class="block text-sm font-semibold text-gray-700 mb-1">Lote</label>
+                <input type="text" id="lote" name="lote" required
+                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
+                    placeholder="Ej. L-4092">
             </div>
 
-            <!-- Tipo de Tela -->
+            <!-- Campo: Tipo de Tela -->
             <div>
-                <label for="tipoTela" class="block text-sm font-semibold text-gray-700 mb-1.5">Tipo de Tela</label>
+                <label for="tipoTela" class="block text-sm font-semibold text-gray-700 mb-1">Tipo de Tela</label>
                 <select id="tipoTela" name="tipoTela" required
-                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white outline-none transition-all text-gray-800 cursor-pointer">
-                    <option value="" disabled selected>Seleccione un tipo</option>
-                    <option value="Algodón">Algodón</option>
-                    <option value="Poliéster">Poliéster</option>
+                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 cursor-pointer appearance-none">
+                    <option value="" disabled selected>Seleccione un tipo...</option>
+                    <option value="Algodon">Algodón</option>
+                    <option value="Poliester">Poliéster</option>
                     <option value="Lino">Lino</option>
                     <option value="Seda">Seda</option>
-                    <option value="Nylon">Nylon</option>
+                    <option value="Mezcla">Mezcla</option>
                 </select>
             </div>
 
-            <!-- Defecto (con micrófono para dictado de voz) -->
+            <!-- Campo: Defecto (Con ícono de micrófono a la derecha) -->
             <div>
-                <label for="defecto" class="block text-sm font-semibold text-gray-700 mb-1.5">Defecto</label>
+                <label for="defecto" class="block text-sm font-semibold text-gray-700 mb-1">Defecto</label>
                 <div class="relative flex items-center">
-                    <input type="text" id="defecto" name="defecto" required placeholder="Describa el defecto..."
-                        class="w-full pl-4 pr-12 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white outline-none transition-all">
+                    <input type="text" id="defecto" name="defecto" required
+                        class="w-full pl-4 pr-12 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
+                        placeholder="Describa el defecto encontrado...">
 
-                    <button type="button" id="btnMic"
-                        class="absolute right-2 p-1.5 text-gray-400 hover:text-gray-600 bg-transparent rounded-full focus:outline-none transition-colors"
+                    <button type="button" id="btn-dictado"
+                        class="absolute right-2 p-2 text-gray-400 hover:text-blue-500 transition-colors focus:outline-none rounded-full hover:bg-gray-100"
                         title="Dictar por voz">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
-                            stroke="currentColor" class="w-5 h-5">
+                        <!-- Ícono SVG Simple de Micrófono -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                            stroke="currentColor" class="w-5 h-5 transition-transform duration-200" id="mic-icon">
                             <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
+                                d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
                         </svg>
                     </button>
                 </div>
             </div>
 
-            <!-- Severidad -->
+            <!-- Campo: Severidad -->
             <div>
-                <label for="severidad" class="block text-sm font-semibold text-gray-700 mb-1.5">Severidad</label>
+                <label for="severidad" class="block text-sm font-semibold text-gray-700 mb-1">Severidad</label>
                 <select id="severidad" name="severidad" required
-                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white outline-none transition-all text-gray-800 cursor-pointer">
-                    <option value="" disabled selected>Seleccione la severidad</option>
-                    <option value="Leve">Leve</option>
-                    <option value="Moderado">Moderado</option>
-                    <option value="Crítico">Crítico</option>
+                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 cursor-pointer appearance-none">
+                    <option value="" disabled selected>Seleccione severidad...</option>
+                    <option value="Baja">Baja</option>
+                    <option value="Media">Media</option>
+                    <option value="Alta">Alta</option>
+                    <option value="Critica">Crítica</option>
                 </select>
             </div>
 
-            <!-- Usuario -->
+            <!-- Campo: Usuario -->
             <div>
-                <label for="usuario" class="block text-sm font-semibold text-gray-700 mb-1.5">Usuario</label>
-                <input type="text" id="usuario" name="usuario" required placeholder="Nombre o ID del usuario"
-                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white outline-none transition-all">
+                <label for="usuario" class="block text-sm font-semibold text-gray-700 mb-1">Usuario</label>
+                <input type="text" id="usuario" name="usuario" required
+                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
+                    placeholder="Ej. Juan Pérez">
             </div>
 
             <!-- Botón de Envío y Mensaje de Estado -->
             <div class="pt-4">
-                <button type="submit" id="btnSubmit"
-                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow-sm hover:shadow-md transition-all flex justify-center items-center gap-2">
+                <button type="submit" id="btn-submit"
+                    class="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold py-3 px-4 rounded-lg shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex justify-center items-center gap-2">
+                    <!-- Ícono de enviar -->
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                         stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                            d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
                     </svg>
-                    Guardar Registro
+                    Enviar Registro
                 </button>
-                <!-- Mensaje de estado al enviar -->
-                <p id="statusMsg" class="text-sm text-center mt-3 hidden font-medium transition-opacity"></p>
+                <p id="status-message"
+                    class="text-center mt-4 text-sm font-semibold hidden opacity-0 transition-opacity duration-300"></p>
             </div>
-
         </form>
     </div>
 
-    <!-- Scripts para lógica de Web Speech API y Fetch -->
     <script>
-        // VARIABLE CONSTANTE DEL GOOGLE APPS SCRIPT
-        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycby7RyZ1f3QiSEfVrSlPU6IRG7e2Xn1sZUvMXCwCUmH4YiMZ6eG92pxAuB5RxvL08n0aNQ/exec';
+        // --- 1. CONFIGURACIÓN DE URL ---
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxxdTs0WEhOYQhnRJYYwYVKs-h1WqI4ixwjTzXol8V-xaCkK7ANCLkAmYo5I31GACc/exec';
 
-        // Referencias a elementos del DOM
-        const form = document.getElementById('qaForm');
-        const defectoInput = document.getElementById('defecto');
-        const btnMic = document.getElementById('btnMic');
-        const btnSubmit = document.getElementById('btnSubmit');
-        const statusMsg = document.getElementById('statusMsg');
+        // --- 2. LÓGICA DE DICTADO POR VOZ (Web Speech API) ---
+        const btnDictado = document.getElementById('btn-dictado');
+        const inputDefecto = document.getElementById('defecto');
+        const micIcon = document.getElementById('mic-icon');
 
-        // Configuración de la Web Speech API
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         let recognition = null;
 
-        if (SpeechRecognition) {
+        // Verificar si el navegador soporta dictado por voz
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             recognition = new SpeechRecognition();
-            recognition.continuous = false; // Detener después de una frase
-            recognition.interimResults = false; // Solo resultados finales
-            recognition.lang = 'es-ES'; // Idioma español
 
+            recognition.continuous = false; // Finaliza al dejar de hablar
+            recognition.interimResults = false; // Solo resultados finales
+            recognition.lang = 'es-ES'; // Lenguaje español
+
+            // Eventos del reconocimiento de voz
             recognition.onstart = function () {
-                // Cambios visuales al iniciar
-                btnMic.classList.add('recording');
-                btnMic.classList.remove('text-gray-400', 'hover:text-gray-600');
-                defectoInput.placeholder = "Escuchando...";
+                micIcon.classList.add('recording');
+                inputDefecto.placeholder = 'Escuchando... hable ahora.';
             };
 
             recognition.onresult = function (event) {
-                const transcript = event.results[0][0].transcript;
-                const currentText = defectoInput.value.trim();
-
-                // Si ya hay texto, lo concatenamos con un espacio
-                defectoInput.value = currentText ? `${currentText} ${transcript}` : transcript;
+                const dictado = event.results[0][0].transcript;
+                const valorActual = inputDefecto.value.trim();
+                // Añadir un espacio si ya hay texto
+                inputDefecto.value = valorActual ? `${valorActual} ${dictado}` : dictado;
             };
 
             recognition.onerror = function (event) {
-                console.error("Error en el micrófono:", event.error);
-                stopRecording();
-                if (event.error !== 'no-speech') {
-                    alert("Error con el micrófono: " + event.error);
-                }
+                console.error("Error al reconocer la voz:", event.error);
+                micIcon.classList.remove('recording');
+                inputDefecto.placeholder = 'Describa el defecto encontrado...';
             };
 
             recognition.onend = function () {
-                stopRecording();
+                micIcon.classList.remove('recording');
+                inputDefecto.placeholder = 'Describa el defecto encontrado...';
             };
-        } else {
-            console.warn("Tu navegador no soporta Web Speech API.");
-            btnMic.style.display = 'none'; // Ocultar si no hay soporte
-        }
 
-        function stopRecording() {
-            btnMic.classList.remove('recording');
-            btnMic.classList.add('text-gray-400', 'hover:text-gray-600');
-            defectoInput.placeholder = "Describa el defecto...";
-        }
-
-        // Evento para activar / desactivar dictado
-        btnMic.addEventListener('click', () => {
-            if (!recognition) return;
-
-            // Toggle grabación
-            if (btnMic.classList.contains('recording')) {
-                recognition.stop();
-            } else {
-                try {
+            // Evento click del botón
+            btnDictado.addEventListener('click', () => {
+                if (micIcon.classList.contains('recording')) {
+                    recognition.stop();
+                } else {
                     recognition.start();
-                } catch (e) {
-                    console.error("No se pudo iniciar el reconocimiento:", e);
                 }
-            }
-        });
+            });
+        } else {
+            console.warn("La Web Speech API no es soportada por este navegador. El dictado por voz está deshabilitado.");
+            btnDictado.style.display = 'none'; // Se oculta el botón si no está soportado
+        }
 
-        // Evento de envío del formulario
+        // --- 3. LÓGICA DE ENVÍO DE FORMULARIO (fetch a Google Apps Script) ---
+        const form = document.getElementById('qa-form');
+        const btnSubmit = document.getElementById('btn-submit');
+        const statusMessage = document.getElementById('status-message');
+
         form.addEventListener('submit', async (e) => {
-            e.preventDefault();
+            e.preventDefault(); // Evita recargar la página
 
-            // Interfaz: Deshabilitar botón y mostrar "Guardando..."
+            // Estado visual: Guardando...
+            const originalContent = btnSubmit.innerHTML;
             btnSubmit.disabled = true;
-            btnSubmit.classList.add('opacity-75', 'cursor-not-allowed');
             btnSubmit.innerHTML = `
-                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg> Guardando...`;
+                </svg>
+                Guardando...
+            `;
+            btnSubmit.classList.add('opacity-80', 'cursor-not-allowed');
+            statusMessage.classList.add('hidden', 'opacity-0');
 
-            statusMsg.textContent = 'Guardando...';
-            statusMsg.classList.remove('hidden', 'text-green-600', 'text-red-600');
-            statusMsg.classList.add('block', 'text-indigo-600');
-
-            // Recopilar datos
-            const payload = {
+            // Preparar el cuerpo con los datos
+            const formData = {
                 lote: document.getElementById('lote').value,
                 tipoTela: document.getElementById('tipoTela').value,
                 defecto: document.getElementById('defecto').value,
                 severidad: document.getElementById('severidad').value,
-                usuario: document.getElementById('usuario').value,
+                usuario: document.getElementById('usuario').value
             };
 
             try {
-                // Fetch al backend de Apps Script
+                // Hacer la petición POST a Apps Script con mode: 'no-cors'
                 await fetch(WEB_APP_URL, {
                     method: 'POST',
-                    mode: 'no-cors', // Fundamental para evitar bloques de CORS al enviar desde orígenes distintos
+                    mode: 'no-cors',
                     headers: {
-                        'Content-Type': 'text/plain;charset=utf-8',
+                        'Content-Type': 'text/plain;charset=utf-8' // Recomendado para no-cors
                     },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify(formData)
                 });
 
-                // Al usar 'no-cors' la respuesta es opaca, por lo que asumimos que si no lanzó error falló la red, está ok.
-                statusMsg.textContent = 'Guardado exitosamente.';
-                statusMsg.classList.replace('text-indigo-600', 'text-green-600');
+                // Debido a 'no-cors', no podemos leer la respuesta real. Asumimos éxito si no hay error de red.
+                mostrarMensaje('¡Registro guardado exitosamente!', 'text-green-600');
 
-                // Limpiar formulario y reiniciar texto del botón
+                // Limpiar el formulario para un nuevo ingreso
                 form.reset();
 
             } catch (error) {
-                console.error("Fallo la petición:", error);
-                statusMsg.textContent = 'Hubo un error al guardar. Revisa tu conexión.';
-                statusMsg.classList.replace('text-indigo-600', 'text-red-600');
+                console.error("Error al enviar el formulario:", error);
+                mostrarMensaje('Hubo un error al guardar. Verifica tu conexión.', 'text-red-500');
             } finally {
-                // Restaurar botón después de 1 segundo (para que de tiempo de ver el exito)
-                setTimeout(() => {
-                    btnSubmit.disabled = false;
-                    btnSubmit.classList.remove('opacity-75', 'cursor-not-allowed');
-                    btnSubmit.innerHTML = `
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                        </svg> Guardar Registro`;
-                }, 500);
-
-                // Ocultar mensaje de estado a los 4 segundos
-                setTimeout(() => {
-                    statusMsg.classList.add('hidden');
-                    statusMsg.classList.remove('block');
-                }, 4000);
+                // Restaurar el botón original
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = originalContent;
+                btnSubmit.classList.remove('opacity-80', 'cursor-not-allowed');
             }
         });
+
+        // Utilidad para mostrar el mensaje de estado por 4 segundos
+        let resetMsgTimeout;
+        function mostrarMensaje(texto, colorClass) {
+            clearTimeout(resetMsgTimeout);
+
+            // Limpiar clases de color anteriores
+            statusMessage.classList.remove('text-green-600', 'text-red-500');
+
+            statusMessage.textContent = texto;
+            statusMessage.classList.add(colorClass);
+            statusMessage.classList.remove('hidden');
+
+            // Pequeño retardo para la animación opacity
+            setTimeout(() => {
+                statusMessage.classList.remove('opacity-0');
+            }, 50);
+
+            // Ocultar a los 4 segundos
+            resetMsgTimeout = setTimeout(() => {
+                statusMessage.classList.add('opacity-0');
+                setTimeout(() => statusMessage.classList.add('hidden'), 300); // Dar tiempo a la transición css
+            }, 4000);
+        }
     </script>
 </body>
 
